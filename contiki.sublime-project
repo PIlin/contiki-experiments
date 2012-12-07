@@ -1,0 +1,60 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+
+
+	"settings":
+	{
+		"sublimeclang_dont_prepend_clang_includes": true,
+		"sublimeclang_options":
+		[
+			"-I${folder:${project_path:contiki.sublime-project}}/avr",
+			"-I${folder:${project_path:contiki.sublime-project}}/avr/gcc_avr_4.5.2_include",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/cpu/avr",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/.",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/apps",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/net",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/loader",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/cpu/avr/.",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/cpu/avr/dev",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/dev",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/lib",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/net",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/net/mac",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/net/rime",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/net/rpl",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/sys",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/cfs",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/ctk",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/lib/ctk",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/loader",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/.",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/",
+
+			"-DCONTIKI=1",
+			"-DCONTIKI_TARGET_ARDUINO=1",
+			"-mmcu=atmega328p",
+			"-fno-strict-aliasing",
+			"-DF_CPU=16000000UL",
+			"-DMCU_MHZ=16",
+			"-DAUTO_CRC_PADDING=2",
+			"-DUSART_BAUD=USART_BAUD_9600",
+			"-DUSART_PORT=RS232_PORT_0",
+			"-DAUTOSTART_ENABLE",
+
+			"-D__AVR_ATmega328P__",
+
+			"-Wno-attributes",
+			"-Wno-builtin-requires-header"
+
+
+			//"-ccc-host-triple", "i386"
+		]
+	}
+}

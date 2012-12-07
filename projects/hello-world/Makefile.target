@@ -1,0 +1,2 @@
+TARGET = arduino
+ARDUINO_MODEL = Duemilanove-328
