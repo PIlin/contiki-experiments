@@ -14,6 +14,7 @@
 		[
 			"-I${folder:${project_path:contiki.sublime-project}}/avr",
 			"-I${folder:${project_path:contiki.sublime-project}}/avr/gcc_avr_4.5.2_include",
+			"-I${folder:${project_path:contiki.sublime-project}}/avr/gcc_avr_4.5.3_include",
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino",
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core",
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/cpu/avr",
