@@ -38,7 +38,12 @@
  *         Adam Dunkels <adam@sics.se>
  */
 
+
+#include "Arduino.h"
+
 #include "contiki.h"
+
+//#include "dev/leds.h"
 
 #include <stdio.h> /* For printf() */
 /*---------------------------------------------------------------------------*/
@@ -49,7 +54,22 @@ PROCESS_THREAD(hello_world_process, ev, data)
 {
   PROCESS_BEGIN();
 
-  printf("Hello, world\n");
+  static struct etimer t;
+  static unsigned int cnt = 0;
+  
+  pinMode(13, OUTPUT);
+
+  while (1)
+  {
+  	//printf("Hello, world %u\n", cnt);
+  	//leds_invert(LEDS_ALL);
+  	
+  	digitalWrite(13, cnt & 1);
+
+  	etimer_set(&t, CLOCK_SECOND * 1);
+  	PROCESS_WAIT_EVENT_UNTIL(etimer_expired(&t));
+  	++cnt;
+  }
   
   PROCESS_END();
 }

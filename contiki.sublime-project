@@ -36,6 +36,8 @@
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/loader",
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/core/.",
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/arduino/",
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/arduino/variants/standard",
 
 			"-DCONTIKI=1",
 			"-DCONTIKI_TARGET_ARDUINO=1",
