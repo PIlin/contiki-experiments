@@ -1,0 +1,6 @@
+*/*.a
+*/*.map
+*/*.hex
+*/obj_*/
+*/symbols.c
+*/symbols.h
