@@ -9,6 +9,9 @@
 
 	"settings":
 	{
+		"trim_trailing_white_space_on_save": true,
+
+
 		"sublimeclang_dont_prepend_clang_includes": true,
 		"sublimeclang_options":
 		[
