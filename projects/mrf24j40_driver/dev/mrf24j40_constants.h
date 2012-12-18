@@ -8,6 +8,12 @@
 #define __MRF24J40_CONSTANTS_H__
 
 
+#ifndef BIT
+# define BIT(x) (1U << (x))
+#endif
+
+
+
 // Control registers
 
 #define    MRF_SRG_RXMCR          0x00
@@ -155,6 +161,8 @@
 
 
 
+#define MRF_LRG_RXFIFO 0x300
+
 
 
 #define    MRF_I_RXIF     0b00001000
@@ -177,6 +185,118 @@
 #define  TXG2STAT   2
 #define  TXG1STAT   1
 #define  TXNSTAT    0
+
+
+enum REG_PACON2 // 0x18
+{
+	TXONT7   =  BIT(0),
+	TXONT8   =  BIT(1),
+	TXONTS0  =  BIT(2),
+	TXONTS1  =  BIT(3),
+	TXONTS2  =  BIT(4),
+	TXONTS3  =  BIT(5),
+	FIFOEN   =  BIT(7),
+};
+
+enum REG_SOFTRST // 0x2a
+{
+	RSTMAC  =  BIT(0),
+	RSTBB   =  BIT(1),
+	RSTPWR  =  BIT(2),
+};
+
+enum REG_TXSTBL // 0x2e
+{
+	MSIFS0   =  BIT(0),
+	MSIFS1   =  BIT(1),
+	MSIFS2   =  BIT(2),
+	MSIFS3   =  BIT(3),
+	RFSTBL0  =  BIT(4),
+	RFSTBL1  =  BIT(5),
+	RFSTBL2  =  BIT(6),
+	RFSTBL3  =  BIT(7),
+};
+
+enum REG_INTSTAT // 0x31
+{
+	TXNIF      =  BIT(0),
+	TXG1IF     =  BIT(1),
+	TXG2IF     =  BIT(2),
+	RXIF       =  BIT(3),
+	SECIF      =  BIT(4),
+	HSYMTMRIF  =  BIT(5),
+	WAKEIF     =  BIT(6),
+	SLPIF      =  BIT(7),
+};
+
+enum REG_INTCON // 0x32
+{
+	TXNIE      =  BIT(0),
+	TXG1IE     =  BIT(1),
+	TXG2IE     =  BIT(2),
+	RXIE       =  BIT(3),
+	SECIE      =  BIT(4),
+	HSYMTMRIE  =  BIT(5),
+	WAKEIE     =  BIT(6),
+	SLPIE      =  BIT(7),
+};
+
+enum REG_BBREG1 // 0x39
+{
+	RXDECINV  =  BIT(2),
+};
+
+enum REG_RFCON1 // 0x201
+{
+	VCOOPT0  =  BIT(0),
+	VCOOPT1  =  BIT(1),
+	VCOOPT2  =  BIT(2),
+	VCOOPT3  =  BIT(3),
+	VCOOPT4  =  BIT(4),
+	VCOOPT5  =  BIT(5),
+	VCOOPT6  =  BIT(6),
+	VCOOPT7  =  BIT(7),
+};
+
+enum REG_RFCON2 // 0x202
+{
+	PPLEN  =  BIT(7),
+};
+
+enum REG_RFCON6 // 0x206
+{
+	BATEN   =  BIT(3),
+	MRECVR  =  BIT(4),
+	TXFIL   =  BIT(7),
+};
+
+enum REG_RFCON7 // 0x207
+{
+	SLPSCKSEL0  =  BIT(6),
+	SLPCLKSEL1  =  BIT(7),
+};
+
+enum REG_RFCON8 // 0x208
+{
+	RFVCO  =  BIT(4),
+};
+
+enum REG_SLPCON0 // 0x211
+{
+	SLPCKEN  =  BIT(0),
+	INTEDGE  =  BIT(1),
+};
+
+enum REG_SLPCON1 // 0x220
+{
+	SLPCLKDIV0  =  BIT(0),
+	SLPCLKDIV1  =  BIT(1),
+	SLPCLKDIV2  =  BIT(2),
+	SLPCLKDIV3  =  BIT(3),
+	SLPCLKDIV4  =  BIT(4),
+	CLKOUTEN    =  BIT(5),
+
+};
 
 
 #endif // __MRF24J40_CONSTANTS_H__
