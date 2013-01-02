@@ -54,7 +54,9 @@
 			"-D__AVR_ATmega328P__",
 
 			"-Wno-attributes",
-			"-Wno-builtin-requires-header"
+			"-Wno-builtin-requires-header",
+
+			"UIP_CONF_IPV6=1"
 
 
 			//"-ccc-host-triple", "i386"
