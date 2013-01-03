@@ -40,6 +40,8 @@
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/arduino/",
 			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/platform/arduino/arduino/variants/standard",
 
+			"-I${folder:${project_path:contiki.sublime-project}}/contiki-arduino/apps/servreg-hack/",
+
 			"-DCONTIKI=1",
 			"-DCONTIKI_TARGET_ARDUINO=1",
 			"-mmcu=atmega328p",

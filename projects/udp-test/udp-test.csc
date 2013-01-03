@@ -23,8 +23,8 @@
     </events>
     <motetype>
       se.sics.cooja.contikimote.ContikiMoteType
-      <identifier>mtype743</identifier>
-      <description>Cooja mote type (client.c)</description>
+      <identifier>mtype496</identifier>
+      <description>client mote</description>
       <source>[CONFIG_DIR]/client.c</source>
       <commands>make client.cooja TARGET=cooja</commands>
       <moteinterface>se.sics.cooja.interfaces.Position</moteinterface>
@@ -47,8 +47,8 @@
     </motetype>
     <motetype>
       se.sics.cooja.contikimote.ContikiMoteType
-      <identifier>mtype429</identifier>
-      <description>Cooja Mote Type #2</description>
+      <identifier>mtype742</identifier>
+      <description>server mote</description>
       <source>[CONFIG_DIR]/server.c</source>
       <commands>make server.cooja TARGET=cooja</commands>
       <moteinterface>se.sics.cooja.interfaces.Position</moteinterface>
@@ -72,38 +72,30 @@
     <mote>
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>57.70767559117053</x>
-        <y>72.80823635377408</y>
+        <x>21.27480693349148</x>
+        <y>53.67107442436765</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
         se.sics.cooja.contikimote.interfaces.ContikiMoteID
         <id>1</id>
       </interface_config>
-      <motetype_identifier>mtype743</motetype_identifier>
+      <motetype_identifier>mtype496</motetype_identifier>
     </mote>
     <mote>
       <interface_config>
         se.sics.cooja.interfaces.Position
-        <x>38.33076962129661</x>
-        <y>47.80577703780773</y>
+        <x>24.51498096163345</x>
+        <y>33.98078609950491</y>
         <z>0.0</z>
       </interface_config>
       <interface_config>
         se.sics.cooja.contikimote.interfaces.ContikiMoteID
         <id>2</id>
       </interface_config>
-      <motetype_identifier>mtype429</motetype_identifier>
+      <motetype_identifier>mtype742</motetype_identifier>
     </mote>
   </simulation>
-  <plugin>
-    se.sics.cooja.plugins.SimControl
-    <width>280</width>
-    <z>3</z>
-    <height>160</height>
-    <location_x>400</location_x>
-    <location_y>0</location_y>
-  </plugin>
   <plugin>
     se.sics.cooja.plugins.Visualizer
     <plugin_config>
@@ -112,10 +104,10 @@
       <skin>se.sics.cooja.plugins.skins.GridVisualizerSkin</skin>
       <skin>se.sics.cooja.plugins.skins.MoteTypeVisualizerSkin</skin>
       <skin>se.sics.cooja.plugins.skins.TrafficVisualizerSkin</skin>
-      <viewport>3.199685238520225 0.0 0.0 3.199685238520225 53.35360226161775 -8.963439103862536</viewport>
+      <viewport>4.012130177913517 0.0 0.0 4.012130177913517 99.64270507285511 8.664662620952214</viewport>
     </plugin_config>
     <width>400</width>
-    <z>1</z>
+    <z>0</z>
     <height>400</height>
     <location_x>1</location_x>
     <location_y>1</location_y>
@@ -125,11 +117,11 @@
     <plugin_config>
       <filter />
     </plugin_config>
-    <width>726</width>
-    <z>4</z>
-    <height>240</height>
-    <location_x>400</location_x>
-    <location_y>160</location_y>
+    <width>1201</width>
+    <z>3</z>
+    <height>441</height>
+    <location_x>397</location_x>
+    <location_y>-3</location_y>
   </plugin>
   <plugin>
     se.sics.cooja.plugins.TimeLine
@@ -139,26 +131,16 @@
       <showRadioRXTX />
       <showRadioHW />
       <showLEDs />
+      <executionDetails />
+      <radioChannels />
       <split>-1</split>
       <zoomfactor>500.0</zoomfactor>
     </plugin_config>
     <width>1126</width>
-    <z>5</z>
+    <z>2</z>
     <height>166</height>
     <location_x>2</location_x>
     <location_y>403</location_y>
-  </plugin>
-  <plugin>
-    se.sics.cooja.plugins.Notes
-    <plugin_config>
-      <notes>Enter notes here</notes>
-      <decorations>true</decorations>
-    </plugin_config>
-    <width>446</width>
-    <z>6</z>
-    <height>160</height>
-    <location_x>680</location_x>
-    <location_y>0</location_y>
   </plugin>
   <plugin>
     se.sics.cooja.plugins.RadioLogger
@@ -167,7 +149,7 @@
       <analyzers name="6lowpan-pcap" />
     </plugin_config>
     <width>1184</width>
-    <z>2</z>
+    <z>4</z>
     <height>460</height>
     <location_x>1</location_x>
     <location_y>568</location_y>
@@ -175,10 +157,10 @@
   <plugin>
     se.sics.cooja.plugins.SimControl
     <width>280</width>
-    <z>0</z>
+    <z>1</z>
     <height>160</height>
-    <location_x>400</location_x>
-    <location_y>0</location_y>
+    <location_x>1168</location_x>
+    <location_y>440</location_y>
   </plugin>
 </simconf>
 

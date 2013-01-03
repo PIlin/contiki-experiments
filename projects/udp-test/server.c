@@ -22,6 +22,8 @@
 #define UDP_CLIENT_PORT	8765
 #define UDP_SERVER_PORT	5678
 
+#define SERVICE_ID 190
+
 static struct uip_udp_conn *server_conn;
 
 PROCESS(udp_server_process, "UDP server process");
@@ -30,61 +32,47 @@ AUTOSTART_PROCESSES(&udp_server_process);
 
 
 
-static void set_global_addresses()
+static uip_ipaddr_t *
+set_global_address(void)
 {
-	uip_ipaddr_t ipaddr;
-	struct uip_ds6_addr* root_if;
-	/* The choice of server address determines its 6LoPAN header compression.
- * Obviously the choice made here must also be selected in udp-client.c.
- *
- * For correct Wireshark decoding using a sniffer, add the /64 prefix to the 6LowPAN protocol preferences,
- * e.g. set Context 0 to aaaa::.  At present Wireshark copies Context/128 and then overwrites it.
- * (Setting Context 0 to aaaa::1111:2222:3333:4444 will report a 16 bit compressed address of aaaa::1111:22ff:fe33:xxxx)
- * Note Wireshark's IPCMV6 checksum verification depends on the correct uncompressed addresses.
- */
-
-#if 0
-/* Mode 1 - 64 bits inline */
-   uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 1);
-#elif 1
-/* Mode 2 - 16 bits inline */
-  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0x00ff, 0xfe00, 1);
-#else
-/* Mode 3 - derived from link local (MAC) address */
-  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
-#endif
-
-  uip_ds6_addr_add(&ipaddr, 0, ADDR_MANUAL);
-  root_if = uip_ds6_addr_lookup(&ipaddr);
-  if(root_if != NULL) {
-    rpl_dag_t *dag;
-    dag = rpl_set_root(RPL_DEFAULT_INSTANCE, &ipaddr);
-    uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
-    rpl_set_prefix(dag, &ipaddr, 64);
-    PRINTF("created a new RPL dag\n");
-  } else {
-    PRINTF("failed to create a new RPL DAG\n");
-  }
-}
-
-static void
-print_local_addresses(void)
-{
+  static uip_ipaddr_t ipaddr;
   int i;
   uint8_t state;
 
-  PRINTF("Server IPv6 addresses: ");
+  uip_ip6addr(&ipaddr, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+  uip_ds6_set_addr_iid(&ipaddr, &uip_lladdr);
+  uip_ds6_addr_add(&ipaddr, 0, ADDR_AUTOCONF);
+
+  printf("IPv6 addresses: ");
   for(i = 0; i < UIP_DS6_ADDR_NB; i++) {
     state = uip_ds6_if.addr_list[i].state;
-    if(state == ADDR_TENTATIVE || state == ADDR_PREFERRED) {
-      PRINT6ADDR(&uip_ds6_if.addr_list[i].ipaddr);
-      PRINTF("\n");
-      /* hack to make address "final" */
-      if (state == ADDR_TENTATIVE) {
-	uip_ds6_if.addr_list[i].state = ADDR_PREFERRED;
-      }
+    if(uip_ds6_if.addr_list[i].isused &&
+       (state == ADDR_TENTATIVE || state == ADDR_PREFERRED)) {
+      uip_debug_ipaddr_print(&uip_ds6_if.addr_list[i].ipaddr);
+      printf("\n");
     }
+  }
+
+  return &ipaddr;
+}
+
+static void
+create_rpl_dag(uip_ipaddr_t *ipaddr)
+{
+  struct uip_ds6_addr *root_if;
+
+  root_if = uip_ds6_addr_lookup(ipaddr);
+  if(root_if != NULL) {
+    rpl_dag_t *dag;
+    uip_ipaddr_t prefix;
+
+    rpl_set_root(RPL_DEFAULT_INSTANCE, ipaddr);
+    dag = rpl_get_any_dag();
+    uip_ip6addr(&prefix, 0xaaaa, 0, 0, 0, 0, 0, 0, 0);
+    rpl_set_prefix(dag, &prefix, 64);
+    PRINTF("created a new RPL dag\n");
+  } else {
+    PRINTF("failed to create a new RPL DAG\n");
   }
 }
 
@@ -109,19 +97,24 @@ static void tcpip_handler()
 
 PROCESS_THREAD(udp_server_process, ev, data)
 {
-
+	uip_ipaddr_t *ipaddr;
 
 	PROCESS_BEGIN();
 
 	PROCESS_PAUSE();
 
+
+
 	PRINTF("UDP server started\n");
 
-#if UIP_CONF_ROUTER
-	set_global_addresses();
-#endif
+	servreg_hack_init();
 
-	print_local_addresses();
+
+	ipaddr = set_global_address();
+	create_rpl_dag(ipaddr);
+	servreg_hack_register(SERVICE_ID, ipaddr);
+
+	//print_local_addresses();
 
 	server_conn = udp_new(NULL, UIP_HTONS(UDP_CLIENT_PORT), NULL);
 	if(server_conn == NULL) {
