@@ -42,14 +42,23 @@ static void br_recv(struct broadcast_conn* c, const rimeaddr_t* f);
 static struct broadcast_conn bc;
 static struct broadcast_callbacks cb = { br_recv, NULL };
 
+static void uc_recv(struct unicast_conn* c, const rimeaddr_t* from);
+static struct unicast_conn uc;
+static struct unicast_callbacks cu = { uc_recv, NULL };
+
+rimeaddr_t remote_addr;
+
+
 static void send_broadcast(packet_t* data, size_t len)
 {
 	//uip_udp_packet_send(outconn, data, len);
 
 	packetbuf_copyfrom(data, len);
-	broadcast_send(&bc);
+	//broadcast_send(&bc);
+	unicast_send(&uc, &remote_addr);
 	
-	PRINTF("send packet ");
+	// PRINTF("send packet ");
+	PRINTF("send packet to %d.%d ", remote_addr.u8[0], remote_addr.u8[1]);
 	PRINTPACKET(*data);
 	PRINTF("\n");
 }
@@ -97,7 +106,15 @@ static void br_recv(struct broadcast_conn* c, const rimeaddr_t* f)
 	process_received(msg, len);
 }
 
+static void uc_recv(struct unicast_conn* c, const rimeaddr_t* f)
+{
+	unsigned char* msg = packetbuf_dataptr();
+	size_t len = packetbuf_datalen();
 
+	printf("Unicast received from: %u.%u\n", f->u8[0], f->u8[1]);
+
+	process_received(msg, len);
+}
 
 PROCESS(broadcast_pinger, "broadcast_pinger");
 AUTOSTART_PROCESSES(&broadcast_pinger);
@@ -110,7 +127,15 @@ PROCESS_THREAD(broadcast_pinger, ev, data)
 	PROCESS_BEGIN();
 	// PROCESS_PAUSE();
 
-	broadcast_open(&bc, 2012, &cb);
+	//broadcast_open(&bc, 2012, &cb);
+	unicast_open(&uc, 2012, &cu);
+
+	remote_addr.u8[0] = 1;
+	remote_addr.u8[1] = 0;
+	if (rimeaddr_cmp(&remote_addr, &rimeaddr_node_addr))
+	{
+		remote_addr.u8[0] = 2;
+	}
 
 /*
 	outconn = udp_broadcast_new(UIP_HTONS(UDP_PORT), NULL);
